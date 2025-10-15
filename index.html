@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TRIXIO BIXIO STREAMING</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="icon.png">
+    <!-- Enhanced CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #141414 url('background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .landing-container {
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.85);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 0 50px rgba(229, 9, 20, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .terminal-title {
+        font-family: 'Courier New', monospace;
+        font-size: 3.5rem;
+        font-weight: bold;
+        margin: 30px 0;
+        min-height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .cursor {
+        display: inline-block;
+        width: 10px;
+        height: 1.2em;
+        background-color: #00ff00;
+        margin-left: 5px;
+        animation: blink 1s infinite;
+        vertical-align: middle;
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      .typed-text {
+        color: #00ff00;
+        text-shadow: 0 0 5px #00ff00;
+      }
+
+      .disclaimer {
+        background: rgba(229, 9, 20, 0.2);
+        border: 1px solid #e50914;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 30px 0;
+        text-align: center;
+      }
+
+      .disclaimer h2 {
+        color: #e50914;
+        margin-bottom: 15px;
+      }
+
+      .password-section {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 30px;
+        margin: 30px 0;
+      }
+
+      .password-section h2 {
+        color: #e50914;
+        margin-bottom: 20px;
+      }
+
+      .password-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      #password {
+        padding: 15px;
+        font-size: 1.1rem;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        transition: all 0.3s ease;
+      }
+
+      #password:focus {
+        border-color: #e50914;
+        box-shadow: 0 0 15px rgba(229, 9, 20, 0.3);
+        outline: none;
+      }
+
+      #submit-password {
+        padding: 15px;
+        font-size: 1.1rem;
+        background: #e50914;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        position: relative;
+        overflow: hidden;
+      }
+
+      #submit-password:hover {
+        background: #b20710;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4);
+      }
+
+      .error-message {
+        color: #e50914;
+        margin-top: 15px;
+        font-weight: bold;
+        display: none;
+      }
+
+      .footer {
+        margin-top: 30px;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        .landing-container {
+          padding: 20px;
+        }
+        
+        .terminal-title {
+          font-size: 2.5rem;
+          min-height: 80px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="landing-container">
+      <div class="terminal-title enhanced-terminal" id="terminal-title">
+        <span class="typed-text" id="typed-text"></span>
+        <span class="cursor" id="cursor"></span>
+      </div>
+      
+      <div class="gif-container" style="margin: 20px auto; max-width: 300px;">
+        <img src="fatfatmillycat-milly.gif" alt="Decorative GIF" style="width: 100%; border-radius: 10px; box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);" class="floating">
+      </div>
+      
+      <div class="disclaimer">
+        <h2>DISCLAIMER</h2>
+        <p>Questo sito è creato esclusivamente per scopi educativi. Nessun contenuto è realmente disponibile per lo streaming. Il progetto è stato sviluppato a scopo dimostrativo per mostrare le capacità di sviluppo web.</p>
+      </div>
+      
+      <div class="password-section">
+        <h2>Accesso al Sito</h2>
+        <p>Inserisci la password per accedere al sito principale</p>
+        
+        <form class="password-form" id="password-form">
+          <input 
+            type="password" 
+            id="password" 
+            placeholder="Inserisci password" 
+            required
+            class="glowing-input"
+          />
+          <button type="submit" id="submit-password" class="glowing-button">Accedi</button>
+        </form>
+        
+        <div class="error-message" id="error-message">
+          Password errata. Riprova.
+        </div>
+      </div>
+      
+      <div class="footer">
+        <p>© 2025 TRIXIO BIXIO STREAMING - Progetto Educativo</p>
+      </div>
+    </div>
+
+    <!-- Enhanced JavaScript Modules -->
+    <script src="config.js"></script>
+    <script src="utils.js"></script>
+    <script src="main.js"></script>
+    
+    <script>
+      // Terminal-style animation for "TRIXIOBIXIO"
+      const text = "TRIXIOBIXIO";
+      const element = document.getElementById('typed-text');
+      const cursor = document.getElementById('cursor');
+      let i = 0;
+      
+      function typeWriter() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, 300); // Speed of typing
+        } else {
+          // Keep cursor blinking after typing is complete
+          cursor.style.animation = 'blink 1s infinite';
+        }
+      }
+      
+      // Start the typing animation when page loads
+      window.addEventListener('load', function() {
+        // Clear any existing content
+        element.innerHTML = '';
+        // Start typing
+        typeWriter();
+        
+        // Initialize enhanced features
+        if (typeof initializeEnhancedLoginForm !== 'undefined') {
+          initializeEnhancedLoginForm();
+        }
+      });
+      
+      // Direct form submission handler to ensure redirection works
+      document.addEventListener('DOMContentLoaded', function() {
+        const passwordForm = document.getElementById('password-form');
+        if (passwordForm) {
+          passwordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            
+            if (password === 'trixio123') {
+              // Simple redirect to Code/index.html
+              window.location.href = 'Code/index.html';
+            } else {
+              // Show error message
+              const errorMessage = document.getElementById('error-message');
+              if (errorMessage) {
+                errorMessage.style.display = 'block';
+              }
+              
+              // Clear password field
+              document.getElementById('password').value = '';
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

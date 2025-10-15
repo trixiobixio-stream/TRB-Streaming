@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRIXIOBIXIO Streaming - Module Tests</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: #141414;
+            color: #fff;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-button {
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #b20710;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .success {
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid #28a745;
+        }
+        .error {
+            background: rgba(220, 53, 69, 0.2);
+            border: 1px solid #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TRIXIOBIXIO Streaming - Module Tests</h1>
+        <p>This page tests the functionality of the newly added modules.</p>
+        
+        <div class="test-section">
+            <h2>Notification Manager Test</h2>
+            <button class="test-button" onclick="testNotifications()">Test Notifications</button>
+            <div id="notification-result" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Loading Manager Test</h2>
+            <button class="test-button" onclick="testLoading()">Test Loading</button>
+            <div id="loading-result" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Modal Manager Test</h2>
+            <button class="test-button" onclick="testModal()">Test Modal</button>
+            <div id="modal-result" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Storage Manager Test</h2>
+            <button class="test-button" onclick="testStorage()">Test Storage</button>
+            <div id="storage-result" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Animation Manager Test</h2>
+            <button class="test-button" onclick="testAnimation()">Test Animation</button>
+            <div id="animation-result" class="result"></div>
+        </div>
+    </div>
+
+    <!-- Include our modules -->
+    <script src="config.js"></script>
+    <script src="utils.js"></script>
+    <script src="main.js"></script>
+    
+    <script>
+        function testNotifications() {
+            const resultDiv = document.getElementById('notification-result');
+            
+            try {
+                // Test different notification types
+                NotificationManager.success('Success notification test!', 2000);
+                NotificationManager.error('Error notification test!', 2000);
+                NotificationManager.warning('Warning notification test!', 2000);
+                NotificationManager.show('Info notification test!', 'info', 2000);
+                
+                resultDiv.innerHTML = 'Notifications test completed successfully!';
+                resultDiv.className = 'result success';
+            } catch (error) {
+                resultDiv.innerHTML = 'Error testing notifications: ' + error.message;
+                resultDiv.className = 'result error';
+            }
+        }
+        
+        function testLoading() {
+            const resultDiv = document.getElementById('loading-result');
+            
+            try {
+                // Show loading
+                LoadingManager.show('Testing loading manager...');
+                
+                // Hide after 2 seconds
+                setTimeout(() => {
+                    LoadingManager.hide();
+                    resultDiv.innerHTML = 'Loading test completed successfully!';
+                    resultDiv.className = 'result success';
+                }, 2000);
+            } catch (error) {
+                resultDiv.innerHTML = 'Error testing loading: ' + error.message;
+                resultDiv.className = 'result error';
+            }
+        }
+        
+        function testModal() {
+            const resultDiv = document.getElementById('modal-result');
+            
+            try {
+                // Show modal
+                ModalManager.show(
+                    'Test Modal',
+                    '<p>This is a test modal content.</p><p>It demonstrates the modal functionality.</p>',
+                    {
+                        buttons: [
+                            {
+                                text: 'Close',
+                                className: 'back-btn',
+                                onClick: () => ModalManager.close()
+                            },
+                            {
+                                text: 'Action',
+                                className: 'test-button',
+                                onClick: () => {
+                                    alert('Action button clicked!');
+                                    ModalManager.close();
+                                }
+                            }
+                        ]
+                    }
+                );
+                
+                resultDiv.innerHTML = 'Modal test completed successfully!';
+                resultDiv.className = 'result success';
+            } catch (error) {
+                resultDiv.innerHTML = 'Error testing modal: ' + error.message;
+                resultDiv.className = 'result error';
+            }
+        }
+        
+        function testStorage() {
+            const resultDiv = document.getElementById('storage-result');
+            
+            try {
+                // Test setting values
+                StorageManager.set('test-key', 'test-value');
+                StorageManager.set('test-key-ttl', 'test-value-ttl', 1000); // 1 second TTL
+                
+                // Test getting values
+                const value1 = StorageManager.get('test-key');
+                const value2 = StorageManager.get('test-key-ttl');
+                
+                // Test removing value
+                StorageManager.remove('test-key');
+                
+                resultDiv.innerHTML = `
+                    Storage test results:<br>
+                    - Value 1: ${value1}<br>
+                    - Value 2 (with TTL): ${value2}<br>
+                    - Removed value: ${StorageManager.get('test-key', 'not found')}
+                `;
+                resultDiv.className = 'result success';
+            } catch (error) {
+                resultDiv.innerHTML = 'Error testing storage: ' + error.message;
+                resultDiv.className = 'result error';
+            }
+        }
+        
+        function testAnimation() {
+            const resultDiv = document.getElementById('animation-result');
+            
+            try {
+                // Create a test element
+                const testElement = document.createElement('div');
+                testElement.textContent = 'Test Animation Element';
+                testElement.style.background = '#e50914';
+                testElement.style.color = 'white';
+                testElement.style.padding = '10px';
+                testElement.style.margin = '10px 0';
+                testElement.style.borderRadius = '5px';
+                testElement.style.display = 'none';
+                
+                resultDiv.appendChild(testElement);
+                
+                // Test fade in
+                AnimationManager.fadeIn(testElement, 1000);
+                
+                // Test fade out after 2 seconds
+                setTimeout(() => {
+                    AnimationManager.fadeOut(testElement, 1000);
+                    resultDiv.innerHTML = 'Animation test completed successfully!';
+                    resultDiv.className = 'result success';
+                }, 2000);
+            } catch (error) {
+                resultDiv.innerHTML = 'Error testing animation: ' + error.message;
+                resultDiv.className = 'result error';
+            }
+        }
+    </script>
+</body>
+</html>

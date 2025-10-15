@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Module Test</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="icon.png">
+</head>
+<body>
+    <h1>JavaScript Module Test</h1>
+    <p>Check the browser console for test results.</p>
+    
+    <!-- Include our modules -->
+    <script src="config.js"></script>
+    <script src="utils.js"></script>
+    <script src="main.js"></script>
+    
+    <script>
+        // Test if modules are loaded
+        window.addEventListener('load', function() {
+            console.log('Testing JavaScript modules...');
+            
+            // Test if config is loaded
+            if (typeof TRIXIOBIXIO_CONFIG !== 'undefined') {
+                console.log('✓ Config loaded:', TRIXIOBIXIO_CONFIG.APP_NAME);
+            } else {
+                console.log('✗ Config not loaded');
+            }
+            
+            // Test if utils are loaded
+            if (typeof NotificationManager !== 'undefined') {
+                console.log('✓ NotificationManager loaded');
+            } else {
+                console.log('✗ NotificationManager not loaded');
+            }
+            
+            // Test if main functions are loaded
+            if (typeof initializeEnhancedLoginForm !== 'undefined') {
+                console.log('✓ initializeEnhancedLoginForm loaded');
+            } else {
+                console.log('✗ initializeEnhancedLoginForm not loaded');
+            }
+            
+            console.log('Test complete.');
+        });
+    </script>
+</body>
+</html>
